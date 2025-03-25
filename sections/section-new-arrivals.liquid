@@ -1,0 +1,65 @@
+{% if section.settings.heading != blank %}
+    <h2 class="heading">{{ section.settings.heading }}</h2>
+{% endif %}
+{% if section.settings.sub_heading != blank %}
+    <p class="sub-heading">{{ section.settings.sub_heading }}</p>
+{% endif %}
+<div class="swiper swiper-new-arrivals">
+    <div class="navigation-new-arrivals">
+        <div class="swiper-button swiper-button-prev">
+            {% render 'icon-arrow-left' %}
+        </div>
+        <div class="swiper-button swiper-button-next">
+            {% render 'icon-arrow-right' %}
+        </div>
+    </div>
+    <div class="swiper-wrapper">
+        {% paginate section.settings.collection.products by 2 %}
+            {%- for product in section.settings.collection.products limit: 10 -%}
+                <div class="swiper-slide">
+                    {% render 'card-product',
+                        card_product: product,
+                        media_aspect_ratio: "adapt",
+                        image_shape: "default",
+                        lazy_load: lazy_load,
+                        section_id: section.id
+                    %}
+                </div>
+            {%- endfor -%}
+        {% endpaginate %}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "New Arrivals",
+  "tag": "section",
+  "class": "section featured-collections__container",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub Heading",
+      "default": "Here’s some of our most popular products people are in love with."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-collection.settings.collection.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Arrivals"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+{% if section.settings.heading != blank %}
+    <h2 class="heading">{{ section.settings.heading }}</h2>
+{% endif %}
+{% if section.settings.sub_heading != blank %}
+    <p class="sub-heading">{{ section.settings.sub_heading }}</p>
+{% endif %}
+<div class="featured-collections__list-items">
+    {% for block in section.blocks %}
+        <div class="featured-collections__item">
+            <a class="link" href="{{ block.settings.link | default: "#" }}">
+                <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" />
+                <div class="btn btn-white">{{ block.settings.link_text }}</div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% schema %}
+{
+  "name": "Featured Collections",
+  "tag": "section",
+  "class": "section featured-collections__container",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Collections"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub Heading",
+      "default": "Elevate your style with our chic featured collection—where fashion meets flair effortlessly."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Featured Collections",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "default": "Clothing",
+          "label": "Link Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collections"
+    }
+  ]
+}
+{% endschema %}

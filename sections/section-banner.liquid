@@ -1,0 +1,92 @@
+<div class="swiper banner__swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper banner__swiper-wrapper">
+        <!-- Slides -->
+        {%- for block in section.blocks -%}
+            {% case block.type %}
+                {%- when 'heading' -%}
+                    {% if block.settings.heading != blank and block.settings.sub_heading != blank and block.settings.link_text != blank %}
+                        <div class="swiper-slide banner__swiper-slide">
+                            <div class="banner__box">
+                                {% if block.settings.heading != blank and block.settings.sub_heading != blank and block.settings.link_text != blank %}
+                                    <div class="content-banner">
+                                        {% if block.settings.heading != blank %}
+                                            <h2 class="heading">{{ block.settings.heading }}</h2>
+                                        {% endif %}
+                                        {% if block.settings.sub_heading != blank %}
+                                            <p class="sub-heading">{{ block.settings.sub_heading }}</p>
+                                        {% endif %}
+                                        {% if block.settings.link_text != blank %}
+                                            <a href="{{ block.settings.link | default: "#" }}" class="btn btn-black">{{ block.settings.link_text }}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                <div class="img">
+                                    <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+            {%- endcase -%}
+        {%- endfor -%}
+
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner",
+  "tag": "section",
+  "class": "section banner__container",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.section-banner.blocks.heading.name",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.section-banner.blocks.heading.settings.image.label"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "t:sections.section-banner.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "text",
+          "id": "sub_heading",
+          "label": "t:sections.section-banner.blocks.heading.settings.sub-heading.label",
+          "default": "So soft you don't want to take it off."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.section-banner.blocks.heading.settings.link.label"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "default": "Explore Now",
+          "label": "t:sections.section-banner.blocks.heading.settings.link-text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
+{% endschema %}
