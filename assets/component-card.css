@@ -500,7 +500,7 @@
 .card-information > *:not(.visually-hidden:first-child) + *:not(.rating):not(.card__information-volume-pricing-note) {
   margin-top: 0.8rem;
   display: flex;
-  gap: 4px;
+  gap: 5px;
 }
 
 .card-information .caption {
